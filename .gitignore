@@ -1,0 +1,44 @@
+# Virtual environment
+musicProject/
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+
+# Environment variables / secrets
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Data — too big for git
+data/
+*.mid
+*.midi
+lmd_matched/
+lmd_matched.tar.gz
+clean_midi/
+clean_midi.tar.gz
+match_scores.json
+
+# Model checkpoints
+*.pt
+*.pth
+*.ckpt
+checkpoints/
+runs/
+wandb/
+
+# Jupyter
+.ipynb_checkpoints/

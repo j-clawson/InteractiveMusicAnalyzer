@@ -42,3 +42,4 @@ wandb/
 
 # Jupyter
 .ipynb_checkpoints/
+corpus_metadata.csv

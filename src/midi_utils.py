@@ -22,21 +22,35 @@ def extract_melody_skyline(midi, time_step=0.05):
     if not all_notes:
         return []
     
+    # Sort by start time
     all_notes.sort(key=lambda n: n.start)
     end_time = max(n.end for n in all_notes)
     
     melody = []
     last_pitch = None
+    
+    # Active notes: list of notes currently sounding
+    active = []
+    note_idx = 0
+    
     t = 0.0
     while t < end_time:
-        sounding = [n for n in all_notes if n.start <= t < n.end]
-        if sounding:
-            highest = max(sounding, key=lambda n: n.pitch)
+        # Add notes that have started by time t
+        while note_idx < len(all_notes) and all_notes[note_idx].start <= t:
+            active.append(all_notes[note_idx])
+            note_idx += 1
+        
+        # Remove notes that have ended by time t
+        active = [n for n in active if n.end > t]
+        
+        if active:
+            highest = max(active, key=lambda n: n.pitch)
             if highest.pitch != last_pitch:
                 melody.append((t, highest.pitch))
                 last_pitch = highest.pitch
         else:
             last_pitch = None
+        
         t += time_step
     
     return melody

@@ -44,7 +44,7 @@ def build_corpus_metadata():
         genre = genres.get(msd_id)
         
         for midi_hash, conf in midi_dict.items():
-            path = f'data/lmd_matched/{midi_hash[0]}/{midi_hash[1]}/{midi_hash[2]}/{midi_hash}.mid'
+            path = f'data/lmd_matched/{msd_id[2]}/{msd_id[3]}/{msd_id[4]}/{msd_id}/{midi_hash}.mid'
             rows.append({
                 'midi_hash': midi_hash,
                 'midi_path': path,

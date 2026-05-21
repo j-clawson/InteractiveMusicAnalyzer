@@ -56,11 +56,23 @@ def extract_melody_skyline(midi, time_step=0.05):
     return melody
 
 
-def melody_to_intervals(melody):
-    """Convert melody [(t, pitch), ...] to a list of pitch intervals (semitones)."""
+def melody_to_intervals(melody, max_interval=12):
+    """Convert melody [(t, pitch), ...] to a list of pitch intervals (semitones).
+    
+    Intervals larger than max_interval semitones are dropped — they almost always
+    reflect the skyline algorithm jumping between instruments rather than real
+    melodic motion. Zero intervals (same pitch after a rest) are also dropped.
+    """
     if len(melody) < 2:
         return []
-    return [melody[i][1] - melody[i-1][1] for i in range(1, len(melody))]
+    
+    intervals = []
+    for i in range(1, len(melody)):
+        raw = melody[i][1] - melody[i-1][1]
+        if raw == 0 or abs(raw) > max_interval:
+            continue
+        intervals.append(raw)
+    return intervals
 
 
 def midi_to_fingerprint(filepath):
